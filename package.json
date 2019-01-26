@@ -9,12 +9,13 @@
     "start-nodemon": "nodemon app.js"
   },
   "engines": {
-    "node" : "10.15.0"
+    "node": "10.15.0"
   },
   "author": "Vivek Selvarajan",
   "license": "MIT",
   "dependencies": {
     "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.4.6",
     "validator": "^10.11.0"
   }

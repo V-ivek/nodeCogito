@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const _ = require('lodash');
+const jwt = require('jsonwebtoken');
 
 
 //Importing MongoDB connection and models
@@ -19,13 +20,18 @@ app.get('/',(req,res) => {
 
 //Handling POST login request
 app.post("/users", (req, res) => {
-    console.log("Users ss",req.body.email,req.body.password)
     var body = _.pick(req.body, ["email","password"]);
     var user = new User(body);
-    user.save().then((user) => {
-        res.status(200).send("success");
-    }).catch((error) => {
-        res.status(400).send("error");
+
+    user.save()
+    .then(() => {
+        return user.generateAuthToken();
+    })
+    .then((token) => {
+        res.status(200).header('x-auth', token).send(user);
+    })
+    .catch((error) => {
+        res.status(400).send(error);
     })
 })
 
